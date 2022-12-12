@@ -10,8 +10,7 @@ public class basicSound : MonoBehaviour
     public bool playOnStart;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         audioSrc=GetComponent<AudioSource>();
         if(playOnStart){
             startPlay=true;
@@ -21,16 +20,7 @@ public class basicSound : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-/*         if(startPlay==true && currentlyPlaying==false){
-            audioSrc.Play();
-            currentlyPlaying=true;
-        }else if(startPlay==false && currentlyPlaying==true){
-            audioSrc.Stop();
-            currentlyPlaying=false;
-        } */
-    }
+    void Update(){}
 
     public void Play(){
         if(startPlay==true && currentlyPlaying==false){

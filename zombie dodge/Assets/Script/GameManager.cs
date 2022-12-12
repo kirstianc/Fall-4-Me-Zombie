@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 
@@ -31,16 +32,25 @@ public class GameManager : MonoBehaviour {
     public GameObject panel;
 
     public bool stopTrigger = false;
-    public AudioSource audioSrc;
+    public AudioSource zombieSrc;
+    public AudioSource pointSrc;
+    public AudioSource deathSrc;
+    public float spawnTime = 2f;
+
 
     // Start is called before the first frame update
     void Start(){
-        AudioSource audioSrc = GetComponent<AudioSource>();
+        AudioSource zombieSrc = GetComponent<AudioSource>();
+        AudioSource pointSrc = GetComponent<AudioSource>();
         Screen.SetResolution(768, 1024, false);
     }
 
     // Update is called once per frame
-    void Update(){}
+    void Update(){
+        if((score%20)==0&&score!=0){
+            spawnTime-=5f;
+        }
+    }
 
     public void GameStart() {
         score = 0;
@@ -50,8 +60,13 @@ public class GameManager : MonoBehaviour {
         panel.SetActive(false);
     }
 
+    public void LoadGame(){
+        SceneManager.LoadScene("playing");
+    }
+
     public void GameOver() {
         stopTrigger = true;
+        deathSrc.Play();
         StopCoroutine(CreateZombieRoutine());
         if(score >= PlayerPrefs.GetInt("BestScore", 0)){
             PlayerPrefs.SetInt("BestScore",score);
@@ -62,14 +77,15 @@ public class GameManager : MonoBehaviour {
 
     public void Score() {
         score++;
-        scoreTxt.text = "score : " + score;
+        scoreTxt.text = "Score: " + score;
+        pointSrc.Play(0);
     }
 
     IEnumerator CreateZombieRoutine(){
         while(!stopTrigger) {
             CreateZombie();
-            audioSrc.Play(0);
-            yield return new WaitForSeconds(0.6f);
+            zombieSrc.Play(0);
+            yield return new WaitForSeconds(spawnTime);
         }
     }
 

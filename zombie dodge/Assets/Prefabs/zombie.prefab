@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2588440688427883818}
-  audioSrc: {fileID: 0}
 --- !u!95 &2588440688427883818
 Animator:
   serializedVersion: 4

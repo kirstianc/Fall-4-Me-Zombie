@@ -11,17 +11,14 @@ public class Player : MonoBehaviour
     private float speed = 5;
     private float horizontal;
     private bool gameStart = false;
-    private bool soundPlaying = false;
 
     public bool isDead = false;
-    public AudioSource audioSrc;
 
     // Start is called before the first frame update
     void Start(){
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
-        audioSrc = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,7 +31,6 @@ public class Player : MonoBehaviour
                 animator.SetTrigger("start");
                 isDead=false;
                 gameStart=true;
-                soundPlaying=false;
             }
             PlayerMove();
         }
@@ -44,10 +40,6 @@ public class Player : MonoBehaviour
                 animator.SetTrigger("dead");
                 isDead=true;
                 gameStart=false;
-                if(!soundPlaying){
-                    audioSrc.Play(0);
-                    soundPlaying=true;
-                }
             }
         }
         ScreenChk();
